@@ -1,0 +1,236 @@
+<meta charset="UTF-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.tabs{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;padding:1.5rem 0 0}
+.tab{padding:6px 14px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s}
+.tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.section{display:none}.section.active{display:block}
+.card{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px 16px;margin-bottom:10px}
+.card-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.card-body{font-size:13px;color:var(--color-text-secondary);line-height:1.6;display:none}
+.card-body.open{display:block}
+.phase-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:500;margin-right:8px;flex-shrink:0}
+.task{display:flex;gap:8px;margin-top:8px;font-size:13px}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.why{font-size:12px;color:var(--color-text-tertiary);margin-top:2px}
+.tip{border-radius:var(--border-radius-md);padding:10px 14px;margin-top:10px;font-size:12px;line-height:1.6;color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.stack-btn{padding:6px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:13px;cursor:pointer;margin:4px 4px 0 0;display:inline-block}
+.stack-btn:hover{border-color:var(--color-border-primary)}
+.detail-box{border-radius:var(--border-radius-md);padding:12px;margin-top:10px;font-size:13px;line-height:1.6;color:var(--color-text-secondary);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);display:none}
+.group-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:14px 0 6px}
+.feat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--color-text-primary);margin-bottom:6px}
+.f-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.arch-box{border-radius:var(--border-radius-md);padding:10px 14px;font-size:13px;font-weight:500;margin-bottom:4px}
+.arrow-down{text-align:center;color:var(--color-text-tertiary);font-size:16px;margin:2px 0}
+</style>
+
+<div class="tabs">
+  <button class="tab active" onclick="show('vision',this)">Идея</button>
+  <button class="tab" onclick="show('arch',this)">Архитектура</button>
+  <button class="tab" onclick="show('plan',this)">Роадмап</button>
+  <button class="tab" onclick="show('stack',this)">Стек</button>
+  <button class="tab" onclick="show('versions',this)">MVP → V3</button>
+</div>
+
+<div class="section active" id="s-vision">
+  <div class="card">
+    <div class="card-title">Что это за проект?</div>
+    <div class="card-body open" style="display:block">
+      Локальная система управления знаниями: загружаешь PDF, видео, аудио, заметки — система анализирует, строит связи, и потом отвечает на твои вопросы. Всё работает на твоём компьютере, <strong style="color:var(--color-text-primary)">0 € в месяц</strong>, никаких облаков.
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Чем отличается от обычного RAG?</div>
+    <div class="card-body open" style="display:block">
+      Обычный RAG: документ → поиск → ответ.<br><br>
+      Твой проект: данные → <strong style="color:var(--color-text-primary)">граф знаний</strong> → <strong style="color:var(--color-text-primary)">долговременная память</strong> → AI-агент → ответ.<br><br>
+      Система не просто находит куски текста — она понимает связи: "Нейросети → Трансформеры → Attention → LLM" и помнит что ты изучал 3 недели назад.
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Что пользователь реально получает?</div>
+    <div class="card-body open" style="display:block">
+      Спрашиваешь "что я читал про трансформеры?" — получаешь структурированный ответ из нескольких источников, связанные материалы, и напоминание что не открывал эту тему 20 дней.<br><br>
+      Для портфолио проект демонстрирует: LLM, RAG, векторные БД, графы знаний, backend, frontend, Docker — всё в одном.
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s-arch">
+  <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:1rem;line-height:1.6">Данные проходят через 5 слоёв. Каждый слой — отдельная задача.</p>
+  <div class="arch-box" style="background:#E6F1FB;color:#0C447C">📥 Источник — PDF, YouTube, аудио, URL, Markdown</div>
+  <div class="arrow-down">↓</div>
+  <div class="arch-box" style="background:#EAF3DE;color:#27500A">⚙️ Обработка — извлечение текста, очистка, разбивка на чанки</div>
+  <div class="arrow-down">↓</div>
+  <div class="arch-box" style="background:#E1F5EE;color:#085041">🗄️ Хранение — эмбеддинги в pgvector + граф в NetworkX</div>
+  <div class="arrow-down">↓</div>
+  <div class="arch-box" style="background:#EEEDFE;color:#3C3489">🤖 AI-агент — Ollama + Qwen/Gemma + LangChain RAG</div>
+  <div class="arrow-down">↓</div>
+  <div class="arch-box" style="background:#FAEEDA;color:#633806">💬 Ответ — Next.js чат + граф + история + рекомендации</div>
+  <div class="tip">Эмбеддинги находят семантически похожие тексты (даже если слова разные), а граф хранит явные связи между понятиями. Вместе = намного лучшее качество чем keyword search.</div>
+</div>
+
+<div class="section" id="s-plan">
+  <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:1rem">Нажимай на этап чтобы раскрыть задачи.</p>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-title" style="padding:12px 16px;background:var(--color-background-secondary)" onclick="toggle(this)">
+      <span><span class="phase-num" style="background:#E6F1FB;color:#0C447C">1</span>Подготовка и инфраструктура</span>
+      <span style="font-size:12px;color:var(--color-text-tertiary)">2–3 дня ▶</span>
+    </div>
+    <div class="card-body" style="padding:14px 16px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div class="task"><span class="dot" style="background:#378ADD"></span><div><div>Создать репозиторий и базовую структуру (backend/, frontend/, docker/)</div><div class="why">Почему: CI/CD и README с самого начала экономят время потом</div></div></div>
+      <div class="task"><span class="dot" style="background:#378ADD"></span><div><div>Написать docker-compose.yml: postgres+pgvector, ollama, backend, frontend</div><div class="why">Почему: запуск одной командой — это ключевое требование проекта</div></div></div>
+      <div class="task"><span class="dot" style="background:#378ADD"></span><div><div>FastAPI с /health эндпоинтом — убедиться что контейнеры общаются</div></div></div>
+      <div class="task"><span class="dot" style="background:#378ADD"></span><div><div>PostgreSQL + pgvector: установить расширение, создать схему БД</div><div class="why">Почему: pgvector нужно ставить отдельно, лучше сразу проверить</div></div></div>
+      <div class="task"><span class="dot" style="background:#378ADD"></span><div><div>Скачать модель через Ollama (qwen3:8b или gemma3:4b)</div><div class="why">Почему: модель 4–8 ГБ, скачай заранее</div></div></div>
+      <div class="tip">💡 Начни с PostgreSQL + pgvector — это самая частая точка боли. Убедись что векторный поиск работает до того как писать основной код.</div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-title" style="padding:12px 16px;background:var(--color-background-secondary)" onclick="toggle(this)">
+      <span><span class="phase-num" style="background:#EAF3DE;color:#27500A">2</span>Обработка документов</span>
+      <span style="font-size:12px;color:var(--color-text-tertiary)">1 неделя ▶</span>
+    </div>
+    <div class="card-body" style="padding:14px 16px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div class="task"><span class="dot" style="background:#639922"></span><div><div>POST /documents/upload — принять PDF, сохранить на диск</div></div></div>
+      <div class="task"><span class="dot" style="background:#639922"></span><div><div>Извлечение текста через pymupdf или pdfplumber</div><div class="why">Почему: качество извлечения влияет на всё что дальше</div></div></div>
+      <div class="task"><span class="dot" style="background:#639922"></span><div><div>Разбивка на чанки: RecursiveCharacterTextSplitter из LangChain</div><div class="why">Почему: правильный chunk size критичен для качества поиска (500–1000 символов)</div></div></div>
+      <div class="task"><span class="dot" style="background:#639922"></span><div><div>Эмбеддинги через sentence-transformers (all-MiniLM-L6-v2)</div></div></div>
+      <div class="task"><span class="dot" style="background:#639922"></span><div><div>Сохранить векторы в pgvector с метаданными (source, page, chunk_id)</div></div></div>
+      <div class="tip">💡 Тестируй каждый шаг отдельно через Python скрипт, не всё сразу. Извлечение → чанкинг → эмбеддинги → поиск.</div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-title" style="padding:12px 16px;background:var(--color-background-secondary)" onclick="toggle(this)">
+      <span><span class="phase-num" style="background:#E1F5EE;color:#085041">3</span>RAG-система и чат</span>
+      <span style="font-size:12px;color:var(--color-text-tertiary)">1 неделя ▶</span>
+    </div>
+    <div class="card-body" style="padding:14px 16px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div class="task"><span class="dot" style="background:#1D9E75"></span><div><div>GET /search?q=... — семантический поиск по чанкам</div><div class="why">Почему: убедиться что поиск работает до интеграции с LLM</div></div></div>
+      <div class="task"><span class="dot" style="background:#1D9E75"></span><div><div>Подключить Ollama через HTTP (OpenAI-совместимый API)</div></div></div>
+      <div class="task"><span class="dot" style="background:#1D9E75"></span><div><div>RAG пайплайн: вопрос → поиск топ-5 чанков → промпт → ответ LLM</div><div class="why">Почему: это сердце всей системы</div></div></div>
+      <div class="task"><span class="dot" style="background:#1D9E75"></span><div><div>Базовый UI чата на Next.js, стриминг ответов через SSE</div></div></div>
+      <div class="tip">💡 Сначала проверь RAG через curl — потом делай UI. Стриминг даёт ощущение живого ответа.</div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-title" style="padding:12px 16px;background:var(--color-background-secondary)" onclick="toggle(this)">
+      <span><span class="phase-num" style="background:#FAEEDA;color:#633806">4</span>Конспекты и теги</span>
+      <span style="font-size:12px;color:var(--color-text-tertiary)">3–4 дня ▶</span>
+    </div>
+    <div class="card-body" style="padding:14px 16px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div class="task"><span class="dot" style="background:#BA7517"></span><div><div>После загрузки документа — автогенерация summary через LLM</div><div class="why">Почему: пользователь сразу видит суть без чтения</div></div></div>
+      <div class="task"><span class="dot" style="background:#BA7517"></span><div><div>Извлечение ключевых слов и тегов (промпт к LLM или KeyBERT)</div><div class="why">Почему: теги нужны для фильтрации и рекомендаций в V2</div></div></div>
+      <div class="task"><span class="dot" style="background:#BA7517"></span><div><div>Показывать конспект в UI при клике на документ</div></div></div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-title" style="padding:12px 16px;background:var(--color-background-secondary)" onclick="toggle(this)">
+      <span><span class="phase-num" style="background:#EEEDFE;color:#3C3489">5</span>Граф знаний</span>
+      <span style="font-size:12px;color:var(--color-text-tertiary)">1 неделя ▶</span>
+    </div>
+    <div class="card-body" style="padding:14px 16px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div class="task"><span class="dot" style="background:#7F77DD"></span><div><div>NER — извлечение сущностей из текста (spacy или промпт к LLM)</div><div class="why">Почему: без сущностей нет узлов в графе</div></div></div>
+      <div class="task"><span class="dot" style="background:#7F77DD"></span><div><div>LLM определяет связи: "X использует Y", "X объясняет Z", "X является частью Z"</div><div class="why">Почему: связи делают граф полезным, не просто список слов</div></div></div>
+      <div class="task"><span class="dot" style="background:#7F77DD"></span><div><div>Граф в NetworkX, экспорт в JSON через /graph API</div></div></div>
+      <div class="task"><span class="dot" style="background:#7F77DD"></span><div><div>Визуализация в браузере через D3.js или vis.js</div></div></div>
+      <div class="tip">💡 Граф — это WOW-момент проекта. Именно он отличает тебя от обычного RAG и впечатляет рекрутеров.</div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-title" style="padding:12px 16px;background:var(--color-background-secondary)" onclick="toggle(this)">
+      <span><span class="phase-num" style="background:#FAECE7;color:#993C1D">6</span>Долговременная память</span>
+      <span style="font-size:12px;color:var(--color-text-tertiary)">1 неделя ▶</span>
+    </div>
+    <div class="card-body" style="padding:14px 16px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div class="task"><span class="dot" style="background:#D85A30"></span><div><div>Логировать все запросы и просмотренные документы в БД</div></div></div>
+      <div class="task"><span class="dot" style="background:#D85A30"></span><div><div>Аналитика паттернов: частые темы, давно не открытые материалы</div></div></div>
+      <div class="task"><span class="dot" style="background:#D85A30"></span><div><div>Уведомления: "Ты не открывал RAG уже 20 дней"</div></div></div>
+      <div class="task"><span class="dot" style="background:#D85A30"></span><div><div>Персональные рекомендации на основе истории</div></div></div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="card-title" style="padding:12px 16px;background:var(--color-background-secondary)" onclick="toggle(this)">
+      <span><span class="phase-num" style="background:#F1EFE8;color:#444441">7</span>Финализация и публикация</span>
+      <span style="font-size:12px;color:var(--color-text-tertiary)">3–5 дней ▶</span>
+    </div>
+    <div class="card-body" style="padding:14px 16px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div class="task"><span class="dot" style="background:#888780"></span><div><div>README с GIF-демо, архитектурной схемой, командой запуска</div><div class="why">Почему: README — первое что видит рекрутер</div></div></div>
+      <div class="task"><span class="dot" style="background:#888780"></span><div><div>GitHub Actions: линтер + тесты при каждом пуше</div></div></div>
+      <div class="task"><span class="dot" style="background:#888780"></span><div><div>Видео-демо 2–3 минуты с реальным use-case</div></div></div>
+      <div class="task"><span class="dot" style="background:#888780"></span><div><div>Метрики: время ответа, качество поиска, RAM/CPU</div></div></div>
+      <div class="tip">💡 Потрать на README столько же времени сколько на код. Это твоя витрина.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="s-stack">
+  <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:1rem">Нажми на технологию — узнай почему именно она.</p>
+  <div class="group-label">Backend</div>
+  <div><button class="stack-btn" onclick="detail('Python','Стандарт для AI/ML. Огромная экосистема: LangChain, sentence-transformers, spacy, faster-whisper — всё на Python.')">Python</button><button class="stack-btn" onclick="detail('FastAPI','Async по умолчанию, автоматическая Swagger документация. Идеален для стриминга ответов LLM.')">FastAPI</button></div>
+  <div class="group-label">Frontend</div>
+  <div><button class="stack-btn" onclick="detail('Next.js','React фреймворк с SSR. App Router — актуально в 2025. Хорошо смотрится в резюме.')">Next.js</button><button class="stack-btn" onclick="detail('TypeScript','Обязателен для серьёзного проекта. Показывает дисциплину разработки.')">TypeScript</button><button class="stack-btn" onclick="detail('Tailwind CSS','Утилитарный CSS — быстро строить UI. Стандарт в индустрии.')">Tailwind CSS</button></div>
+  <div class="group-label">AI / данные</div>
+  <div><button class="stack-btn" onclick="detail('Ollama','Запускает LLM локально через REST API совместимый с OpenAI. Поддерживает Qwen, Gemma, Llama.')">Ollama</button><button class="stack-btn" onclick="detail('Qwen3 8B / Gemma 3 4B','Qwen3 8B — мощнее, лучше для анализа. Gemma 3 4B — быстрее, меньше RAM. Выбирай по своей машине.')">Qwen / Gemma</button><button class="stack-btn" onclick="detail('sentence-transformers','Локальные эмбеддинги. all-MiniLM-L6-v2 — хороший баланс скорости и качества, запускается на CPU.')">sentence-transformers</button><button class="stack-btn" onclick="detail('LangChain','Оркестрация RAG: text splitters, vector store integrations, chains. Много готового кода.')">LangChain</button><button class="stack-btn" onclick="detail('faster-whisper','Локальная транскрибация аудио/видео. Нужна для YouTube и аудио файлов в V2.')">faster-whisper</button></div>
+  <div class="group-label">Базы данных</div>
+  <div><button class="stack-btn" onclick="detail('PostgreSQL + pgvector','pgvector добавляет тип vector и cosine similarity поиск. Одна база для метаданных и векторов — проще архитектура.')">PostgreSQL + pgvector</button><button class="stack-btn" onclick="detail('NetworkX','Python библиотека для графов. Граф в памяти/JSON. Для MVP достаточно, для продакшена можно потом перейти на Neo4j.')">NetworkX</button></div>
+  <div class="group-label">Инфраструктура</div>
+  <div><button class="stack-btn" onclick="detail('Docker + Compose','docker compose up — единственная команда для запуска всей системы. Обязателен для портфолио проекта.')">Docker + Compose</button><button class="stack-btn" onclick="detail('GitHub Actions','Автоматические тесты при каждом пуше. Показывает культуру разработки.')">GitHub Actions</button></div>
+  <div class="detail-box" id="det"></div>
+</div>
+
+<div class="section" id="s-versions">
+  <div style="border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:16px;margin-bottom:12px">
+    <div style="font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px">MVP — базовая система</div>
+    <div style="display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:#EAF3DE;color:#27500A;margin-bottom:10px">Цель: показать что система работает</div>
+    <div class="feat"><div class="f-dot" style="background:#639922"></div>Загрузка PDF и извлечение текста</div>
+    <div class="feat"><div class="f-dot" style="background:#639922"></div>Семантический поиск по документам</div>
+    <div class="feat"><div class="f-dot" style="background:#639922"></div>AI-чат с ответами на основе документов</div>
+    <div class="feat"><div class="f-dot" style="background:#639922"></div>Автоматические конспекты</div>
+  </div>
+  <div style="border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:16px;margin-bottom:12px">
+    <div style="font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px">Версия 2 — расширенные источники</div>
+    <div style="display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:#E6F1FB;color:#0C447C;margin-bottom:10px">Цель: разные форматы данных</div>
+    <div class="feat"><div class="f-dot" style="background:#378ADD"></div>YouTube (транскрибация через Whisper)</div>
+    <div class="feat"><div class="f-dot" style="background:#378ADD"></div>Аудиофайлы</div>
+    <div class="feat"><div class="f-dot" style="background:#378ADD"></div>Граф знаний с визуализацией</div>
+    <div class="feat"><div class="f-dot" style="background:#378ADD"></div>Рекомендации связанных материалов</div>
+  </div>
+  <div style="border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:16px;margin-bottom:12px">
+    <div style="font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px">Версия 3 — умная система</div>
+    <div style="display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);background:#EEEDFE;color:#3C3489;margin-bottom:10px">Цель: персонализация и AI-агент</div>
+    <div class="feat"><div class="f-dot" style="background:#7F77DD"></div>Долговременная память пользователя</div>
+    <div class="feat"><div class="f-dot" style="background:#7F77DD"></div>AI-агент с несколькими инструментами</div>
+    <div class="feat"><div class="f-dot" style="background:#7F77DD"></div>Персональные рекомендации</div>
+    <div class="feat"><div class="f-dot" style="background:#7F77DD"></div>Мониторинг производительности</div>
+  </div>
+  <div class="tip">🎯 Не переходи к V2 пока MVP не работает стабильно. Лучше MVP на 100% чем V3 на 40%.</div>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggle(header){
+  const body=header.nextElementSibling;
+  body.classList.toggle('open');
+  body.style.display=body.classList.contains('open')?'block':'none';
+  const meta=header.querySelector('span:last-child');
+  if(meta)meta.textContent=meta.textContent.replace(body.style.display==='block'?'▶':'▼',body.style.display==='block'?'▼':'▶');
+}
+function detail(name,desc){
+  const el=document.getElementById('det');
+  el.style.display='block';
+  el.innerHTML='<strong style="color:var(--color-text-primary)">'+name+'</strong><br>'+desc;
+}
+</script>
