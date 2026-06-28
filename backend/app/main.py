@@ -1,3 +1,4 @@
+from .config import settings
 from fastapi import FastAPI
 import os
 import requests
@@ -5,8 +6,8 @@ import psycopg2
 
 app = FastAPI()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-OLLAMA_URL = os.getenv("OLLAMA_URL")
+DATABASE_URL = settings.database_url
+OLLAMA_URL = settings.ollama_url
 
 @app.get("/health")
 def health():
